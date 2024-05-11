@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #332d2d;
+            padding: 50px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+            background-color: #3c39392e;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+          
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #7c1818;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Page</h1>
+    <form id="admin-form">
+        <label for="csbs-intake">CSBS Intake:</label>
+        <select id="csbs-intake" name="csbs-intake" required>
+            <option value="">Select Intake</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+        </select>
+        <label for="cse-intake">CSE Intake:</label>
+        <select id="cse-intake" name="cse-intake" required>
+            <option value="">Select Intake</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+        </select>
+        <label for="it-intake">IT Intake:</label>
+        <select id="it-intake" name="it-intake" required>
+            <option value="">Select Intake</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+        </select>
+        <label for="eee-intake">EEE Intake:</label>
+        <select id="eee-intake" name="eee-intake" required>
+            <option value="">Select Intake</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+        </select>
+        <label for="ece-intake">ECE Intake:</label>
+        <select id="ece-intake" name="ece-intake" required>
+            <option value="">Select Intake</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+        </select>
+        <label for="ei-intake">EI Intake:</label>
+        <select id="ei-intake" name="ei-intake" required>
+            <option value="">Select Intake</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+        </select>
+        <label for="mech-intake">MECH Intake:</label>
+        <select id="mech-intake" name="mech-intake" required>
+            <option value="">Select Intake</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+        </select>
+        <label for="mctrs-intake">MCTRS Intake:</label>
+        <select id="mctrs-intake" name="mctrs-intake" required>
+            <option value="">Select Intake</option>
+            <option value="60">60</option>
+            <option value="120">120</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+        </select>
+        <label for="cse-cluster-staff">CSE Cluster Staff:</label>
+        <input type="number" id="cse-cluster-staff" name="cse-cluster-staff" required>
+        <label for="electrical-cluster-staff">Electrical Cluster Staff:</label>
+        <input type="number" id="electrical-cluster-staff" name="electrical-cluster-staff" required>
+        <label for="mech-cluster-staff">MECH Cluster Staff:</label>
+        <input type="number" id="mech-cluster-staff" name="mech-cluster-staff" required>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        document.getElementById('admin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Get intake data from form inputs
+            var csbsIntake = document.getElementById('csbs-intake').value;
+            var cseIntake = document.getElementById('cse-intake').value;
+            var itIntake = document.getElementById('it-intake').value;
+            var eeeIntake = document.getElementById('eee-intake').value;
+            var eceIntake = document.getElementById('ece-intake').value;
+            var eiIntake = document.getElementById('ei-intake').value;
+            var mechIntake = document.getElementById('mech-intake').value;
+            var mctrsIntake = document.getElementById('mctrs-intake').value;
+            var cseClusterStaff = document.getElementById('cse-cluster-staff').value;
+            var electricalClusterStaff = document.getElementById('electrical-cluster-staff').value;
+            var mechClusterStaff = document.getElementById('mech-cluster-staff').value;
+            
+            // Calculate staff required for each department
+            var cseStaffRequired = (parseInt(cseIntake) + parseInt(itIntake)) * 1.2;
+            var eceStaffRequired = (parseInt(eceIntake) + parseInt(eiIntake)) * 1.2;
+            var mechStaffRequired = (parseInt(mechIntake) + parseInt(mctrsIntake)) * 1.2;
+            
+            // Construct URL with intake data to pass to result page
+            var url = 'result.html?csbsIntake=' + csbsIntake +
+                      '&cseIntake=' + cseIntake +
+                      '&itIntake=' + itIntake +
+                      '&eeeIntake=' + eeeIntake +
+                      '&eceIntake=' + eceIntake +
+                      '&eiIntake=' + eiIntake +
+                      '&mechIntake=' + mechIntake +
+                      '&mctrsIntake=' + mctrsIntake +
+                      '&cseClusterStaff=' + cseClusterStaff +
+                      '&electricalClusterStaff=' + electricalClusterStaff +
+                      '&mechClusterStaff=' + mechClusterStaff;
+            
+            // Redirect to result page with intake data in the URL
+            window.location.href = url;
+        });
+    </script>
+    
+</body>
+</html>
