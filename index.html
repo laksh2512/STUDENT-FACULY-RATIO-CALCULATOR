@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Faculty Ratio - BIT</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #b4cae0;
+            padding: 50px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+            color: black;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        form {
+            width: 450px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: inline-block;
+            width: 120px; /* Increased width to accommodate the larger label text */
+            text-align: right;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="password"], input[type="submit"] {
+            width: 100%; /* Set the width of all input elements to 100% */
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>BIT Student Faculty Ratio</h1>
+    <form id="form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <input type="submit" value="Login">
+    </form>
+    <script>
+        document.getElementById('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            if (username === 'admin' && password === 'admin') {
+                window.location.href = 'admin.html';
+            } else {
+                window.location.href = 'result.html';
+            }
+        });
+    </script>
+</body>
+</html>
