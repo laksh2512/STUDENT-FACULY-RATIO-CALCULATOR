@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 50px;
+            text-align: center; /* Center align the content */
+        }
+        h1 {
+            margin-bottom: 50px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px; /* Add some space below the table */
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        #optimization-button {
+            margin-top: 20px; /* Add space above the button */
+            display: inline-block; /* Make the button inline block */
+            padding: 10px 20px; /* Add padding to the button */
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student-Faculty Ratio</h1>
+    <table id="result-table">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Intake</th>
+                <th>Staff Allotted</th>
+                <th>Staff Required</th>
+                <th>Staff Needed</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button id="optimization-button" onclick="moveToOptimizationPage()">Go to Optimization Page</button>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const departments = [
+            { name: 'CSE', intake: parseInt(urlParams.get('cseIntake')) },
+            { name: 'IT', intake: parseInt(urlParams.get('itIntake')) },
+            { name: 'CSBS', intake: parseInt(urlParams.get('csbsIntake')) },
+            { name: 'EEE', intake: parseInt(urlParams.get('eeeIntake')) },
+            { name: 'ECE', intake: parseInt(urlParams.get('eceIntake')) },
+            { name: 'EI', intake: parseInt(urlParams.get('eiIntake')) },
+            { name: 'Mech', intake: parseInt(urlParams.get('mechIntake')) },
+            { name: 'MCTRS', intake: parseInt(urlParams.get('mctrsIntake')) }
+        ];
+
+        const clusterStaff = [
+            { name: 'CSE', staff: parseInt(urlParams.get('cseClusterStaff')) },
+            { name: 'Electrical', staff: parseInt(urlParams.get('electricalClusterStaff')) },
+            { name: 'Mech', staff: parseInt(urlParams.get('mechClusterStaff')) }
+        ];
+
+        departments.forEach((department) => {
+            let staffAllotted = 0;
+            let staffRequired = 0;
+
+            // Calculate staff allotted for each department based on the cluster
+            switch (department.name) {
+                case 'CSE':
+                case 'IT':
+                    staffAllotted = Math.ceil(0.2 * clusterStaff.find(cluster => cluster.name === 'CSE').staff);
+                    break;
+                case 'EEE':
+                case 'ECE':
+                    staffAllotted = Math.ceil(0.2 * clusterStaff.find(cluster => cluster.name === 'Electrical').staff);
+                    break;
+                case 'EI':
+                case 'Mech':
+                case 'MCTRS':
+                    staffAllotted = Math.ceil(0.4 * clusterStaff.find(cluster => cluster.name === 'Mech').staff);
+                    break;
+                case 'CSBS':
+                    staffAllotted = Math.ceil((department.intake / 120) * 4) + Math.ceil((department.intake / 120) * 12);
+                    break;
+            }
+
+            // Calculate staff required for each department
+            staffRequired = (department.intake * 4) / 20;
+
+            // Calculate staff needed
+            const staffNeeded = staffRequired - staffAllotted;
+
+            // Determine status
+            const status = staffAllotted >= staffRequired ? "Valid" : "Invalid";
+
+            // Populate the result table
+            const resultTable = document.getElementById('result-table');
+            resultTable.innerHTML += `
+                <tr>
+                    <td>${department.name}</td>
+                    <td>${department.intake}</td>
+                    <td>${staffAllotted}</td>
+                    <td>${staffRequired.toFixed(2)}</td>
+                    <td>${staffNeeded > 0 ? staffNeeded.toFixed(2) : "Nil"}</td>
+                    <td>${status}</td>
+                </tr>
+            `;
+        });
+
+        // Function to navigate to the optimization page
+        function moveToOptimizationPage() {
+            window.location.href = 'optimization.html'; // Replace with the actual path to the optimization page
+        }
+    </script>
+</body>
+</html>
